@@ -17,8 +17,6 @@ module.exports.register = async (req, res, next) => {
             let salt = await bcrypt.genSalt(10)
             // console.log(salt)
             const newPassword = password.toString();
-
-            // bcrypt.hash(newPassword, numSaltRounds, function(err, hash) {});
             const hashedPassword = await bcrypt.hash(newPassword, salt  );
             User.create({
                 name: req.body.name,

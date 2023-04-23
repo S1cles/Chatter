@@ -1,5 +1,3 @@
-const User = require("../models/userModel")
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 module.exports.private = async(req, res, next) => {
@@ -12,9 +10,7 @@ module.exports.private = async(req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded;
-    //   const newToken = jwt.sign({ email: decoded.email, name: decoded.name }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: '1d' });
       return next()
-      // возвращаем новый токен
     } catch (ex) {
       res.status(400).json({ message: 'Invalid token.' });
     }

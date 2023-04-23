@@ -5,9 +5,16 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+/* html{
+  background-image: url('../public/giphy.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+} */

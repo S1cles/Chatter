@@ -1,0 +1,12 @@
+.box{
+    padding: 40px;
+     border: 2px rgb(220, 100, 220) dotted;
+     filter: drop-shadow(3px 3px 3px rgb(158, 41, 190));
+     border-radius: 10px;
+    .inside{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 50px;
+    }
+}

@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
@@ -192,18 +192,6 @@ const Register = () => {
         </Button>
       </form>
       <div style={{ position: "absolute", top: 0, right: 0 }}>
-    {/* <ToastContainer
-      position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="dark"
-    /> */}
   </div>
     </TabPanel>
   );

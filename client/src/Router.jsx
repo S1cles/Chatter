@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import "./index.css";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import ChatPage from "./pages/ChatPage";
+import AvatarPage from "./pages/AvatarPage";
 import { Box } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 
@@ -18,7 +19,7 @@ const Router = () => {
 
   useEffect(() => {
     const auth = window.localStorage.getItem("isAuth");
-    if (auth == "true") {
+    if (auth === "true" && location.pathname === "/register") {
       navigate("/chat");
     }
   }, [location.pathname, navigate]);
@@ -27,8 +28,10 @@ const Router = () => {
     <Box>
       {location.pathname !== "/register" && <NavBar />}
       <Routes>
-        <Route path={"/register"} element={<AuthPage />} />
-        <Route path={"/chat"} element={<ChatPage />} />
+        <Route  path={"/register"} element={<AuthPage />} />
+        <Route  path={"/chat"} element={<ChatPage />} />
+        <Route  path={"/avatar"} element={<AvatarPage />} />
+        {/* <Route path="*" element={ <Navigate to="/register" replace={true} />} /> */}
       </Routes>
     </Box>
   );

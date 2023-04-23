@@ -1,13 +1,12 @@
 import React from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import {
   Avatar,
   Box,
   Button,
   Container,
-  Flex,
   IconButton,
   Menu,
   MenuButton,
@@ -15,6 +14,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { IoIosSettings } from "react-icons/io";
+// import { jwtName } from './../utils/user';
 const NavBar = () => {
   const navigate = useNavigate();
 
@@ -34,8 +34,8 @@ const NavBar = () => {
     navigate("/register");
   };
 
-  const jwtName = jwt_decode(localStorage.getItem("token")).user.name;
-  console.log(jwtName);
+  // const jwtName = 'sadjaksbbdkabsdasbdasbdhkbasjdnaskjdnasjndasjndasjkdsna'
+
   return (
     <Box>
       <Container
@@ -45,7 +45,6 @@ const NavBar = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-
         <Menu>
           <MenuButton
             as={IconButton}
@@ -54,7 +53,7 @@ const NavBar = () => {
             variant="outline"
           />
           <MenuList>
-            <MenuItem command="⌘T">New Tab</MenuItem>
+            <MenuItem><Link to={'/avatar'}>Avatar</Link></MenuItem>
             <MenuItem command="⌘N">New Window</MenuItem>
             <MenuItem command="⌘⇧N">Open Closed Tab</MenuItem>
             <MenuItem command="⌘O">Open File...</MenuItem>
@@ -65,11 +64,15 @@ const NavBar = () => {
         </Button>
       </Container>
       <hr />
-      <Box display={'flex'} justifyContent={'center'} m={5} alignItems={"center"} gap={10}>
-        <Avatar  width={'auto'} padding={1} color={'blackAlpha.500'}>{jwtName}</Avatar>
-          
-          
-        </Box>
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        m={5}
+        alignItems={"center"}
+        gap={10}
+      >
+
+      </Box>
     </Box>
   );
 };
