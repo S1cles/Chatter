@@ -1,61 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
-import { Link, useNavigate } from "react-router-dom";
-import { FileUploader } from "react-drag-drop-files";
-import { Avatar, Box } from "@chakra-ui/react";
-import DragDrop from "../components/DragDrop/DragDrop";
-import MyLinkButton from './../components/MyLinkButton/MyLinkButton';
+import { useNavigate } from "react-router-dom";
+import { Avatar, Box, Text } from "@chakra-ui/react";
+import MyLinkButton from "./../components/MyLinkButton/MyLinkButton";
+import Upload from "./../components/Upload";
+
 const AvatarPage = () => {
   const navigate = useNavigate();
-  const fileTypes = ["JPG", "PNG"];
-  const [file, setFile] = useState(null);
-  const handleChange = (file) => {
-    setFile(file);
-  };
 
   const [isAuth, updateIsAuth] = useAuthGlobal((state) => [
     state.isAuth,
     state.updateIsAuth,
   ]);
+  const [name, updateName] = useAuthGlobal((state) => [
+    state.name,
+    state.updateName,
+  ]);
 
-  function checkAuth() {
-    if (isAuth === false) {
-      navigate("/register");
-    }
-  }
-
-  useEffect(() => {
-    checkAuth();
-  }, [isAuth]);
 
   return (
     <Box>
-      <Box
-        gap={10}
-        flexDirection={"column"}
-        alignItems={"center"}
-        padding={20}
-        display={"flex"}
-        justifyContent={"center"}
-      >
+      {isAuth ? (
+        <Box
+          gap={10}
+          flexDirection={"column"}
+          alignItems={"center"}
+          padding={5}
+          display={"flex"}
+          justifyContent={"center"}
+        >
+          <Text fontWeight={"bold"} fontSize={"2xl"} m={0} padding={0}>
+            {name}
+          </Text>
+          <Avatar
+            src={`/avatar/${name}.png`}
+            size={"3xl"}
+            width={300}
+            h={300}
+          ></Avatar>
 
-        <Avatar
-          src="https://bit.ly/dan-abramov"
-          name={"1"}
-          size={"6xl"}
-        ></Avatar>
+          <Upload name={name} />
 
-        <FileUploader
-          handleChange={handleChange}
-          name="file"
-          types={fileTypes}
-          children={<DragDrop t1="Drag your image" t2="PNG" />}
-        />
-              <MyLinkButton to={'/chat'}>
-        Back
-      </MyLinkButton>
-      </Box>
-
+          <MyLinkButton to={"/chat"}>Back</MyLinkButton>
+        </Box>
+      ) : (
+        navigate("/register")
+      )}
     </Box>
   );
 };

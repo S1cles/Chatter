@@ -21,6 +21,7 @@
     "lodash.clonedeep": "^4.5.0",
     "mongoose": "^7.0.4",
     "nodemon": "^2.0.22",
+    "socket.io": "^4.6.1",
     "zustand-persist": "^0.4.0"
   }
 }

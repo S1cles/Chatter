@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 module.exports.private = async(req, res, next) => {
     await req.headers['x-auth-token']
     const token = req.headers['x-auth-token'];
-    console.log(token)
+    // console.log(token)
     if (!token) {
       return res.status(401).json({ message: 'Access denied. No token provided.' });
     }

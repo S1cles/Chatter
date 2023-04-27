@@ -1,7 +1,7 @@
 import React from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
 import { Link, useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import {
   Avatar,
   Box,
@@ -53,7 +53,9 @@ const NavBar = () => {
             variant="outline"
           />
           <MenuList>
-            <MenuItem><Link to={'/avatar'}>Avatar</Link></MenuItem>
+            <Link to={"/avatar"}>
+              <MenuItem>Avatar</MenuItem>
+            </Link>
             <MenuItem command="⌘N">New Window</MenuItem>
             <MenuItem command="⌘⇧N">Open Closed Tab</MenuItem>
             <MenuItem command="⌘O">Open File...</MenuItem>
@@ -70,9 +72,7 @@ const NavBar = () => {
         m={5}
         alignItems={"center"}
         gap={10}
-      >
-
-      </Box>
+      ></Box>
     </Box>
   );
 };

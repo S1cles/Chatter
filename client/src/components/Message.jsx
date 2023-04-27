@@ -1,18 +1,26 @@
-import { Avatar, Box, position } from "@chakra-ui/react";
+import { Avatar, Box  } from "@chakra-ui/react";
 import React from "react";
-import jwtName from "../utils/user";
+import useAuthGlobal from "../State/useAuthGlobal";
 
-const Message = ({ name, children }) => {
+
+const Message = ({ props , children}) => {
+  
+  const [name, updateName] = useAuthGlobal((state) => [
+    state.name,
+    state.updateName,
+  ]);
+
+
   return (
     <Box
-      style={
-        name === jwtName.user.name
+      style={ 
+        props.from === name
           ? { clear: "both", float: "right" }
           : { clear: "both", float: "left" }
       }
       display={'flex'} gap={3} alignItems={'center'} m={2}
     >
-      {name === jwtName.user.name ? null : <Avatar size={'sm'}></Avatar>}
+      {props.from === name ? null : <Avatar size={'sm'}></Avatar>}
       <Box
         border={"1px solid rgb(158, 41, 190)"}
         borderRadius={"10px"}
