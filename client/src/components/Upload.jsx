@@ -3,13 +3,17 @@ import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
 import DragDrop from "./DragDrop/DragDrop";
 import { Box, Button } from "@chakra-ui/react";
+import useAuthGlobal from "../State/useAuthGlobal";
 
 const Upload = (props) => {
   const [file, setFile] = useState(null);
-  const [skin, setSkin] = useState(props.name);
   const fileTypes = ["PNG"];
 
-  //SKINLOAD
+  const [token, updateToken] = useAuthGlobal((state) => [
+    state.token,
+    state.updateToken,
+  ]);
+
   const fileData = new FormData();
 
   const handleChange = (files) => {
@@ -22,6 +26,7 @@ const Upload = (props) => {
     } else {
       fileData.set("skin", file);
       fileData.set("name", props.name);
+      axios.defaults.headers.common["x-auth-token"] = token;
       await axios
         .post("http://localhost:5555/api/upload", fileData)
         .then((response) => {
@@ -34,42 +39,11 @@ const Upload = (props) => {
     }
   };
 
-  //3DSKINLOADER
-//   const imageName = `${props.name}.png`;
-//   const getImage = (imageName) => {
-//     fetch(process.env.PUBLIC_URL + "/" + imageName)
-//       .then((response) => {
-//         if (!response.ok) {
-//           throw new Error("File not found");
-//         }
-//         return response;
-//       })
-//       .then(() => {
-//         const skin = new Image();
-//         skin.src = process.env.PUBLIC_URL + "skins/" + imageName;
-//         skin.onload = () => {
-//           if (skin.width !== 64 || skin.height !== 64) {
-//             return alert("Загруженное изображение должно быть 64x64 пикселей!");
-//           }
-//           return setSkin(skin);
-//         };
-//         const defaultSkin = new Image();
-//         defaultSkin.src = process.env.PUBLIC_URL + "skins/default.png";
-//         defaultSkin.onload = () => {
-//           return setSkin(defaultSkin);
-//         };
-//       });
-//   };
-
-//   useEffect(() => {
-//     getImage(imageName);
-//   }, [props.name]);
 
   return (
-    <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-      
+    <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
       <FileUploader
-       className={'upload'}
+        className={"upload"}
         handleChange={handleChange}
         name="file"
         maxSize={10}
@@ -77,7 +51,7 @@ const Upload = (props) => {
         children={<DragDrop t1="Drag your image" t2="PNG" />}
       />
 
-      <Button m={3} onClick={handleSkinFile} bg={'rgb(158, 41, 190)'}>
+      <Button m={3} onClick={handleSkinFile} bg={"rgb(158, 41, 190)"}>
         Upload
       </Button>
     </Box>

@@ -6,6 +6,8 @@ import ChatPage from "./pages/ChatPage";
 import AvatarPage from "./pages/AvatarPage";
 import { Box } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
+import NF from "./pages/NF";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 const Router = () => {
   const location = useLocation();
@@ -26,12 +28,14 @@ const Router = () => {
 
   return (
     <Box>
-      {location.pathname !== "/register" && <NavBar />}
+      {location.pathname !== "/register" && location.pathname !== "/error"  && <NavBar />}
       <Routes>
         <Route  path={"/register"} element={<AuthPage />} />
         <Route  path={"/chat"} element={<ChatPage />} />
         <Route  path={"/avatar"} element={<AvatarPage />} />
-        {/* <Route path="*" element={ <Navigate to="/register" replace={true} />} /> */}
+        <Route  path={"/password"} element={<ChangePasswordPage />} />
+        <Route  path={"/error"} element={<NF />} />
+        <Route path="*" element={ <Navigate to="/error" replace={true} />} />
       </Routes>
     </Box>
   );

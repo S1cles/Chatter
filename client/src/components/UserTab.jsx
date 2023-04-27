@@ -15,11 +15,13 @@ const UserTab = ({ name }) => {
       padding={5}
       alignItems={"center"}
       h={"80px"}
-      border={"1px solid white"}
+      // border={"1px solid white"}
+      borderRadius={10}
+      bg={'gray.500'}
       onClick={()=> updateChat(name)}
     >
       <Avatar src={`/avatar/${name}.png`}></Avatar>
-      <Text fontSize={"xl"}>{name}</Text>
+      <Text color={'black'} fontSize={"xl"}>{name}</Text>
     </Box>
   );
 };

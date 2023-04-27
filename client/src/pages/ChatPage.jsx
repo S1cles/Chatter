@@ -2,17 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
 import useChat from "../State/useChat";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Avatar, Box, Container, Text } from "@chakra-ui/react";
 import UserTab from "./../components/UserTab";
 import Message from "./../components/Message";
 import jwt_decode from "jwt-decode";
@@ -21,7 +12,6 @@ import MyInput from "./../components/MyInput/MyInput";
 import { io } from "socket.io-client";
 const ChatPage = () => {
   const socket = useRef();
-  let scrollRef = useRef();
   const navigate = useNavigate();
   const [isAuth, updateIsAuth] = useAuthGlobal((state) => [
     state.isAuth,
@@ -108,18 +98,32 @@ const ChatPage = () => {
 
   useEffect(() => {
     async function fetchData() {
-      if (currentChat) {
-        const response = await axios.post(
-          "http://localhost:5555/api/chat/getMessage",
-          {
-            from: name,
-            to: currentChat,
+      try {
+        axios.defaults.headers.common["x-auth-token"] = token;
+        if (currentChat) {
+          const res = await axios.post(
+            "http://localhost:5555/api/chat/getMessage",
+            {
+              from: name,
+              to: currentChat,
+            }
+          );
+          if (res.status === 401) {
+            updateIsAuth(false);
+            navigate("/register");
+          } else {
+            updateIsAuth(true);
           }
-        );
-        setMessages(response.data);
-        console.log(response.data);
+          setMessages(res.data);
+          console.log(res.data);
+        }
+      } catch (err) {
+        console.error(err);
+        updateIsAuth(false);
+        navigate("/register");
       }
     }
+
     fetchData();
   }, [currentChat]);
 
@@ -150,12 +154,10 @@ const ChatPage = () => {
           maxW={"8xl"}
           bg={"#131320"}
           borderRadius={"20px"}
-          display={"flex"}
-          justifyContent={"space-between"}
           p={0}
           overflow={"auto"}
         >
-          <Box
+          {/* <Box
             display={"flex"}
             flexDirection={"column"}
             flex={1}
@@ -182,21 +184,10 @@ const ChatPage = () => {
               {allUsers.map((user) =>
                 user !== name ? <UserTab name={user} key={user} /> : null
               )}
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
-              <UserTab name={"user"} />
               <UserTab name={null} />
             </Box>
-          </Box>
-          <Box flex={4} border={"1px solid green"} flexDirection={"column"}>
+          </Box> */}
+          <Box flex={4} flexDirection={"column"}>
             {currentChat === null ? (
               <Box
                 flex={2}
@@ -211,10 +202,9 @@ const ChatPage = () => {
             ) : (
               <Box
                 flex={2}
-                minH={"80vh"}
+                h={"85vh"}
                 overflow={"auto"}
-                maxH={"81vh"}
-                padding={"50px 50px 0px 50px"}
+                padding={"20px 20px 0px 20px"}
               >
                 {Array.isArray(messages) &&
                   messages.map((message) => (

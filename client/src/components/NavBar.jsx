@@ -8,12 +8,15 @@ import {
   Button,
   Container,
   IconButton,
+  Img,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import { IoIosSettings } from "react-icons/io";
+import { AiOutlinePoweroff } from "react-icons/ai";
 // import { jwtName } from './../utils/user';
 const NavBar = () => {
   const navigate = useNavigate();
@@ -39,31 +42,49 @@ const NavBar = () => {
   return (
     <Box>
       <Container
-        maxW="6xl"
+        maxW={{ base: "full", md:'8xl', lg:'8xl'}}
+        padding={2}
         h={"80px"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-between"}
       >
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<IoIosSettings />}
-            variant="outline"
-          />
-          <MenuList>
-            <Link to={"/avatar"}>
-              <MenuItem>Avatar</MenuItem>
-            </Link>
-            <MenuItem command="⌘N">New Window</MenuItem>
-            <MenuItem command="⌘⇧N">Open Closed Tab</MenuItem>
-            <MenuItem command="⌘O">Open File...</MenuItem>
-          </MenuList>
-        </Menu>
-        <Button bg={"red.300"} color={"black"} onClick={() => Logout()}>
-          Log out
-        </Button>
+        <Box display={"flex"} alignItems={"center"}>
+          <Img src="/logo.png" width={"auto"} p={0} m={0} h={"80px"} />{" "}
+          <Text fontSize={"2xl"} ml={-5} fontFamily="Bruno Ace SC">
+            KillaChat
+          </Text>
+        </Box>
+        <Box display={'flex'} gap={5}>
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              color={"#f6aa35"}
+              icon={<IoIosSettings />}
+              variant="outline"
+            />
+            <MenuList>
+              <Link to={"/chat"}>
+                <MenuItem>Chat</MenuItem>
+              </Link>
+              <Link to={"/avatar"}>
+                <MenuItem>Avatar</MenuItem>
+              </Link>
+              <Link to={"/password"}>
+                <MenuItem>Change password</MenuItem>
+              </Link>
+            </MenuList>
+          </Menu>
+          <Button
+            color={"red"}
+            bg={"inherit"}
+            border={"1px solid red"}
+            onClick={() => Logout()}
+          >
+            <AiOutlinePoweroff />
+          </Button>
+        </Box>
       </Container>
       <hr />
       <Box
