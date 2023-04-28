@@ -73,7 +73,7 @@ const RegisterPage = () => {
               borderRadius={20}
             >
               <Tabs isFitted variant="enclosed">
-                <Img src="/logo.png" width={"xl"} margin={"0 auto"} />
+                <img src="/logo.png" width={"xl"} margin={"0 auto"} />
                 <TabList mb="1em">
                   <Tab>Registration</Tab>
                   <Tab>Login</Tab>
