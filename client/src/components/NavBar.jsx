@@ -45,7 +45,7 @@ const NavBar = () => {
         justifyContent={"space-between"}
       >
         <Box display={"flex"} alignItems={"center"}>
-          <Img src="/logo.png" width={"auto"} p={0} m={0} h={"80px"} />{" "}
+          <img src="/Logo.png" width={"auto"} p={0} m={0} h={"80px"} />
           <Text fontSize={"2xl"} ml={-5} fontFamily="Bruno Ace SC">
             KillaChat
           </Text>
