@@ -24,7 +24,7 @@ const backend = app.listen(port, ()=>console.log(`Started ${port}`))
 
 const io = socket(backend,{
     cors:{
-        origin:'http://localhost:3000',
+        origin:'https://chatter-rust.vercel.app',
         credentials:true
     }
 })
