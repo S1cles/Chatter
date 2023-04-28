@@ -23,14 +23,8 @@ const FriendList = () => {
     state.isAuth,
     state.updateIsAuth,
   ]);
-  const [name, updateName] = useAuthGlobal((state) => [
-    state.name,
-    state.updateName,
-  ]);
-  const [token, updateToken] = useAuthGlobal((state) => [
-    state.token,
-    state.updateToken,
-  ]);
+  const [name] = useAuthGlobal((state) => [state.name]);
+  const [token] = useAuthGlobal((state) => [state.token]);
 
   const [allUsers, setAllUsers] = useState([]);
 
@@ -43,7 +37,9 @@ const FriendList = () => {
           return console.log("No token");
         }
         axios.defaults.headers.common["x-auth-token"] = token;
-        const res = await axios.get("http://localhost:5555/api/getAllUsers");
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/getAllUsers`
+        );
         if (res.status === 401) {
           updateIsAuth(false);
           navigate("/register");
@@ -110,9 +106,10 @@ const FriendList = () => {
                 flexDirection={"column"}
               >
                 {allUsers.map((user) =>
-                  user !== name ? <UserTab name={user} key={user} /> : null
+                  user !== name ? (
+                    <UserTab onClose={onClose} name={user} key={user} />
+                  ) : null
                 )}
-                <UserTab name={null} />
               </Box>
             </Box>
           </DrawerBody>

@@ -3,10 +3,9 @@ import useAuthGlobal from "../State/useAuthGlobal";
 import useChat from "../State/useChat";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Container, Text } from "@chakra-ui/react";
-import UserTab from "./../components/UserTab";
+import {  Box, Container } from "@chakra-ui/react";
+
 import Message from "./../components/Message";
-import jwt_decode from "jwt-decode";
 import Wallpaper from "../components/Wallpaper";
 import MyInput from "./../components/MyInput/MyInput";
 import { io } from "socket.io-client";
@@ -18,49 +17,24 @@ const ChatPage = () => {
     state.updateIsAuth,
   ]);
 
-  const [name, updateName] = useAuthGlobal((state) => [
+  const [name] = useAuthGlobal((state) => [
     state.name,
-    state.updateName,
+
   ]);
-  const [token, updateToken] = useAuthGlobal((state) => [
+  const [token] = useAuthGlobal((state) => [
     state.token,
-    state.updateToken,
+
   ]);
-  const [currentChat, updateChat] = useChat((state) => [
+  const [currentChat] = useChat((state) => [
     state.currentChat,
-    state.updateChat,
   ]);
 
-  const [allUsers, setAllUsers] = useState([]);
+
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
+
   useEffect(() => {
-    console.log(isAuth);
-    const verify = async () => {
-      try {
-        if (!token) {
-          return console.log("No token");
-        }
-        axios.defaults.headers.common["x-auth-token"] = token;
-        const res = await axios.get("http://localhost:5555/api/getAllUsers");
-        if (res.status === 401) {
-          updateIsAuth(false);
-          navigate("/register");
-        } else {
-          const users = res.data.user.map((user) => user.name);
-          setAllUsers(users);
-          updateIsAuth(true);
-        }
-      } catch (err) {
-        console.error(err);
-        updateIsAuth(false);
-        navigate("/register");
-      }
-    };
-    verify();
-  }, []);
-  useEffect(() => {
-    socket.current = io("http://localhost:5555");
+    socket.current = io(`${process.env.REACT_APP_API_URL}`);
     socket.current.emit("add-user", name);
   }, [currentChat]);
 
@@ -69,7 +43,7 @@ const ChatPage = () => {
   const handleInput = async (message) => {
     axios.defaults.headers.common["x-auth-token"] = token;
     await axios
-      .post("http://localhost:5555/api/chat/addMessage", {
+      .post(`${process.env.REACT_APP_API_URL}/api/chat/addMessage`, {
         from: name,
         to: currentChat,
         message: message,
@@ -102,7 +76,7 @@ const ChatPage = () => {
         axios.defaults.headers.common["x-auth-token"] = token;
         if (currentChat) {
           const res = await axios.post(
-            "http://localhost:5555/api/chat/getMessage",
+            `${process.env.REACT_APP_API_URL}/api/chat/getMessage`,
             {
               from: name,
               to: currentChat,

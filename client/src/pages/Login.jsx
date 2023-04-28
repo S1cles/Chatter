@@ -7,7 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,19 +17,9 @@ import jwt_decode from "jwt-decode";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isAuth, updateIsAuth] = useAuthGlobal((state) => [
-    state.isAuth,
-    state.updateIsAuth,
-  ]);
-  const [token, updateToken] = useAuthGlobal((state) => [
-    state.token,
-    state.updateToken,
-  ]);
-  const [name, updateName] = useAuthGlobal((state) => [
-    state.name,
-    state.updateName,
-  ]);
-
+  const [updateIsAuth] = useAuthGlobal((state) => [state.updateIsAuth]);
+  const [updateToken] = useAuthGlobal((state) => [state.updateToken]);
+  const [updateName] = useAuthGlobal((state) => [state.updateName]);
 
   const resolver = async (values) => {
     return {
@@ -75,13 +65,17 @@ const Login = () => {
           const token = req.data.token;
           updateIsAuth(true);
           updateToken(token);
-          updateName(jwt_decode(req.data.token).user.name)
+          updateName(jwt_decode(req.data.token).user.name);
         })
         .then(() => navigate("/chat"))
         .catch(navigate("/register"));
       return response;
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      if (
+        error.response ||
+        error.response.status === 400 ||
+        error.response.status === 401
+      ) {
         toast.error(error.response.data.message);
       } else {
         toast.error("An unknown error occurred. Please try again later.");
@@ -138,18 +132,6 @@ const Login = () => {
           Login
         </Button>
       </form>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      /> */}
     </TabPanel>
   );
 };

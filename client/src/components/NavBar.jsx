@@ -1,9 +1,8 @@
 import React from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
 import { Link, useNavigate } from "react-router-dom";
-// import jwt_decode from "jwt-decode";
+
 import {
-  Avatar,
   Box,
   Button,
   Container,
@@ -17,32 +16,28 @@ import {
 } from "@chakra-ui/react";
 import { IoIosSettings } from "react-icons/io";
 import { AiOutlinePoweroff } from "react-icons/ai";
-// import { jwtName } from './../utils/user';
 const NavBar = () => {
   const navigate = useNavigate();
 
-  const [isAuth, updateIsAuth] = useAuthGlobal((state) => [
-    state.isAuth,
-    state.updateIsAuth,
-  ]);
-  const [token, updateToken] = useAuthGlobal((state) => [
-    state.token,
-    state.updateToken,
-  ]);
+  const [updateIsAuth] = useAuthGlobal((state) => [state.updateIsAuth]);
+  const [updateToken] = useAuthGlobal((state) => [state.updateToken]);
+  const [updateName] = useAuthGlobal((state) => [state.updateName]);
+
   const Logout = () => {
     window.localStorage.removeItem("isAuth");
     window.localStorage.removeItem("token");
     updateIsAuth(false);
     updateToken(null);
+    updateName(null)
     navigate("/register");
   };
 
-  // const jwtName = 'sadjaksbbdkabsdasbdasbdhkbasjdnaskjdnasjndasjndasjkdsna'
+
 
   return (
     <Box>
       <Container
-        maxW={{ base: "full", md:'8xl', lg:'8xl'}}
+        maxW={{ base: "full", md: "8xl", lg: "8xl" }}
         padding={2}
         h={"80px"}
         display={"flex"}
@@ -55,7 +50,7 @@ const NavBar = () => {
             KillaChat
           </Text>
         </Box>
-        <Box display={'flex'} gap={5}>
+        <Box display={"flex"} gap={5}>
           <Menu>
             <MenuButton
               as={IconButton}

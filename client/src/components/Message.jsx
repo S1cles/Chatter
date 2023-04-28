@@ -1,12 +1,17 @@
 import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
 import useAuthGlobal from "../State/useAuthGlobal";
+import useChat from "../State/useChat";
 
 const Message = ({ props, children }) => {
-  const [name, updateName] = useAuthGlobal((state) => [
+  const [name] = useAuthGlobal((state) => [
     state.name,
     state.updateName,
   ]);
+  const [currentChat] = useChat((state) => [
+    state.currentChat,
+  ]);
+
 
   return (
     <Box
@@ -20,14 +25,13 @@ const Message = ({ props, children }) => {
       alignItems={"center"}
       m={2}
     >
-      {props.from === name ? null : <Avatar src={`/avatar/${name}.png`} size={'sm'}></Avatar>}
+      {props.from === name ? null : <Avatar src={`/avatar/${currentChat}.png`} size={'sm'}></Avatar>}
       <Box
         style={
           props.from === name
             ? { border: "1px solid rgb(158, 41, 190)" }
             : { border: "2px solid rgb(246, 50, 50)" }
         }
-        // border={"1px solid rgb(158, 41, 190)"}
         borderRadius={"10px"}
         p={5}
         whiteSpace={"wrap"}

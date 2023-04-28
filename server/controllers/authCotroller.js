@@ -94,3 +94,31 @@ module.exports.upload = async (req, res) => {
 }
 
 
+module.exports.password = async (req, res, next) => {
+    try {
+      const email = req.body.email;
+      const newPassword = req.body.newPassword;
+      console.log(newPassword + email);
+  
+      if (!newPassword || !email) {
+        return res.status(500).json('Something WRONG');
+      }
+  
+      const salt = await bcrypt.genSalt();
+      const hashPassword = await bcrypt.hash(newPassword, salt);
+  
+      const user = await User.findOneAndUpdate(
+        { email: email },
+        { password: hashPassword }
+      );
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.status(200).json({ message: 'Password updated' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Something wrong' });
+    }
+  };

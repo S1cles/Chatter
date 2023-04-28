@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import axios from "axios";
 import DragDrop from "./DragDrop/DragDrop";
@@ -9,10 +9,7 @@ const Upload = (props) => {
   const [file, setFile] = useState(null);
   const fileTypes = ["PNG"];
 
-  const [token, updateToken] = useAuthGlobal((state) => [
-    state.token,
-    state.updateToken,
-  ]);
+  const [token] = useAuthGlobal((state) => [state.token]);
 
   const fileData = new FormData();
 
@@ -28,7 +25,7 @@ const Upload = (props) => {
       fileData.set("name", props.name);
       axios.defaults.headers.common["x-auth-token"] = token;
       await axios
-        .post("http://localhost:5555/api/upload", fileData)
+        .post(`${process.env.REACT_APP_API_URL}/api/upload`, fileData)
         .then((response) => {
           console.log(response);
           window.location.reload();
@@ -38,7 +35,6 @@ const Upload = (props) => {
         });
     }
   };
-
 
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>

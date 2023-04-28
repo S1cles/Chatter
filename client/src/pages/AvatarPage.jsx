@@ -8,15 +8,8 @@ import Upload from "./../components/Upload";
 const AvatarPage = () => {
   const navigate = useNavigate();
 
-  const [isAuth, updateIsAuth] = useAuthGlobal((state) => [
-    state.isAuth,
-    state.updateIsAuth,
-  ]);
-  const [name, updateName] = useAuthGlobal((state) => [
-    state.name,
-    state.updateName,
-  ]);
-
+  const [isAuth] = useAuthGlobal((state) => [state.isAuth]);
+  const [name] = useAuthGlobal((state) => [state.name]);
 
   return (
     <Box>

@@ -1,13 +1,9 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import React from "react";
-import useChat from '../State/useChat'
+import useChat from "../State/useChat";
 
-const UserTab = ({ name }) => {
-
-  const [currentChat, updateChat] = useChat((state) => [
-    state.currentChat,
-    state.updateChat,
-  ]);
+const UserTab = ({ name, onClose }) => {
+  const [updateChat] = useChat((state) => [state.updateChat]);
   return (
     <Box
       display={"flex"}
@@ -17,11 +13,16 @@ const UserTab = ({ name }) => {
       h={"80px"}
       // border={"1px solid white"}
       borderRadius={10}
-      bg={'gray.500'}
-      onClick={()=> updateChat(name)}
+      bg={"gray.500"}
+      onClick={() => {
+        updateChat(name);
+        onClose();
+      }}
     >
       <Avatar src={`/avatar/${name}.png`}></Avatar>
-      <Text color={'black'} fontSize={"xl"}>{name}</Text>
+      <Text color={"black"} fontSize={"xl"}>
+        {name}
+      </Text>
     </Box>
   );
 };

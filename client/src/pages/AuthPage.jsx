@@ -9,7 +9,6 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from "@chakra-ui/react";
 import Register from "./Register";
 import Login from "./Login";
@@ -27,7 +26,7 @@ const RegisterPage = () => {
       display="flex"
       alignItems="center"
       justifyContent={"center"}
-      overflow={'hidden'}
+      overflow={"hidden"}
     >
       <Box
         fontSize={{ base: "xl", sm: "3xl", md: "5xl", lg: "7xl" }}
@@ -36,12 +35,16 @@ const RegisterPage = () => {
         left={{ base: "-20px", sm: "-30px", md: "-10px", lg: "-20px" }}
         display={{ sm: "none", md: "none", lg: "flex" }}
       >
-        {/* <Text>Ragnarok</Text> */}
+
         <Typewriter
-          onInit={(typewriter) => {
-            typewriter.typeString("Ragnarok").pauseFor(9999999).start();
-          }}
-        />
+  options={{
+    strings: ['Ragnarok'],
+    autoStart: true,
+    loop: true,
+    deleteSpeed: 999999,
+    delay:60
+  }}
+/>
       </Box>
       <Box
         fontSize={{ base: "xl", sm: "3xl", md: "5xl", lg: "7xl" }}
@@ -50,13 +53,17 @@ const RegisterPage = () => {
         right={{ base: "-20px", sm: "-30px", md: "-70px", lg: "-70px" }}
         display={{ sm: "none", md: "none", lg: "flex" }}
       >
-        {/* <Text>Ragnarok</Text> */}
+
         <Typewriter
-          onInit={(typewriter) => {
-            typewriter.typeString("is comming...").pauseFor(9999999).start();
-          }}
-        />
-        </Box>
+  options={{
+    strings: ['is comming...'],
+    autoStart: true,
+    loop: true,
+    deleteSpeed: 999999,
+    delay:60
+  }}
+/>
+      </Box>
       <Box textAlign="center" fontSize="xl">
         <Grid minH="100vh" p={3}>
           <Container>
